@@ -1,7 +1,18 @@
+// import Map from '@/components/map';
 import { ChevronRightIcon } from '@radix-ui/react-icons';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
+import { useMemo } from 'react';
 
 export default function Home() {
+  const Map = useMemo(
+    () =>
+      dynamic(() => import('@/components/map'), {
+        loading: () => <p>A map is loading</p>,
+        ssr: false,
+      }),
+    []
+  );
   return (
     <>
       <div className='absolute h-[210px] w-full top-0 left-0 -z-10 overflow-hidden box-border'>
@@ -13,7 +24,7 @@ export default function Home() {
           className='h-full w-full object-cover'
         />
       </div>
-      <div className='flex items-center flex-col gap-6 py-8 px-4'>
+      <div className='flex items-center flex-col gap-6 py-8 px-4 min-h-screen'>
         <h1 className='text-white text-2xl font-medium'>IP Address Tracker</h1>
 
         <form className='flex w-full h-[42px] max-w-xl mx-auto'>
@@ -23,7 +34,9 @@ export default function Home() {
           </button>
         </form>
 
-        <div></div>
+        <div className='h-[300px]'>
+          <Map posix={[4.79029, -75.69003]} />
+        </div>
       </div>
     </>
   );
