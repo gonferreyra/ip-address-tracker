@@ -32,7 +32,7 @@ export default function Map(props: MapProps) {
       scrollWheelZoom={true}
       zoomControl={false}
       style={{
-        height: '100%',
+        height: 'inherit',
         width: '100%',
         position: 'absolute',
         top: '210px',
