@@ -1,17 +1,17 @@
-// import Map from '@/components/map';
-import ContentP from '@/components/content-p';
-import IpInformation from '@/components/ip-information';
-import Title from '@/components/title';
-import { ChevronRightIcon } from '@radix-ui/react-icons';
+import { Suspense, useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import { useMemo } from 'react';
+import { ChevronRightIcon } from '@radix-ui/react-icons';
+
+import { countryTestData as testData } from '@/lib/db';
+import IpInformation from '@/components/ip-information';
+import Skeleton from '@/components/skeleton';
 
 export default function Home() {
   const Map = useMemo(
     () =>
       dynamic(() => import('@/components/map'), {
-        loading: () => <p>A map is loading</p>,
+        loading: () => <p>Loading...</p>,
         ssr: false,
       }),
     []
@@ -42,10 +42,12 @@ export default function Home() {
           </button>
         </form>
 
-        <IpInformation />
+        <Suspense fallback={<Skeleton />}>
+          <IpInformation />
+        </Suspense>
 
         <div className='z-0 h-[calc(100vh-210px)]'>
-          <Map posix={[-31.4135, -64.18105]} />
+          <Map posix={[testData.location.lat, testData.location.lng]} />
         </div>
       </div>
     </>
