@@ -3,25 +3,31 @@
 import { useIpContext } from '@/lib/hooks';
 import { ValidateIPAddress } from '@/lib/utils';
 import { ChevronRightIcon } from '@radix-ui/react-icons';
-import { FieldValues, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+
 import toast from 'react-hot-toast';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { searchSchema, TSearchSchema } from '@/lib/types';
 
 export default function SearchForm() {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
     reset,
-  } = useForm();
-  const { dispatch, isLoading } = useIpContext();
+  } = useForm<TSearchSchema>({
+    resolver: zodResolver(searchSchema),
+  });
+  const { dispatch } = useIpContext();
 
-  const onSubmit = async (data: FieldValues) => {
+  const onSubmit = async (data: TSearchSchema) => {
     dispatch({ type: 'isLoading' });
 
-    if (data.length == 0) {
+    // validations
+    if (data.search.length == 0) {
       toast.error('IP Address or Domain is required');
     }
-    // validations
+
     if (!ValidateIPAddress(data.search)) {
       toast.error('Invalid IP address. Please try again.');
       dispatch({
@@ -57,23 +63,19 @@ export default function SearchForm() {
         className='flex w-full max-w-md mx-auto'
       >
         <input
-          {...register('search', {
-            required: 'IP Address or Domain is required',
-            // Ver mas validaciones
-          })}
+          {...register('search')}
           className='h-full rounded-l-lg p-4 focus:outline-none flex-1 '
           placeholder='Search for any IP address or domain'
         />
         <button
           className='bg-veryDarkGray h-full w-[32px] flex justify-center items-center rounded-r-lg'
-          disabled={isLoading}
+          disabled={isSubmitting}
         >
           <ChevronRightIcon className='text-white text-2xl' />
         </button>
       </form>
-      {/* ver como mostramos el error */}
       {errors.search && (
-        <p className='text-red-500 bg-white'>{`${errors.search.message}`}</p>
+        <p className='text-red-500'>** {`${errors.search.message}`}</p>
       )}
     </>
   );
