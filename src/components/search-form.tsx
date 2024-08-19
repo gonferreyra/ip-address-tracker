@@ -25,7 +25,7 @@ export default function SearchForm() {
 
     // validations
     if (data.search.length == 0) {
-      toast.error('IP Address or Domain is required');
+      toast.error('IP Address is required');
     }
 
     if (!ValidateIPAddress(data.search)) {
@@ -64,8 +64,8 @@ export default function SearchForm() {
       >
         <input
           {...register('search')}
-          className='h-full rounded-l-lg p-4 focus:outline-none flex-1 '
-          placeholder='Search for any IP address or domain'
+          className='h-full rounded-l-lg p-4 focus:outline-none flex-1 cursor-pointer'
+          placeholder='Search for any IP address'
         />
         <button
           className='bg-veryDarkGray h-full w-[32px] flex justify-center items-center rounded-r-lg'

@@ -13,7 +13,7 @@ export default function IpInformation() {
   }
 
   return (
-    <div className='p-6 bg-white z-10 w-full max-w-md rounded-lg flex flex-col text-center gap-4 md:flex-row md:justify-between md:max-w-2xl md:text-left'>
+    <div className='p-6 bg-white z-10 w-full max-w-md rounded-lg flex flex-col text-center gap-4 md:flex-row md:justify-between md:max-w-2xl md:text-left lg:max-w-4xl'>
       <div className='basis-1/4'>
         <Title>IP Address</Title>
         <ContentP>{ipData?.ip}</ContentP>
