@@ -1,5 +1,3 @@
-'use client';
-
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import { LatLngExpression, LatLngTuple } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -13,7 +11,7 @@ type MapProps = {
 };
 
 export default function Map(props: MapProps) {
-  const { zoom = 19, posix } = props;
+  const { zoom = 14, posix } = props;
 
   const imageIcon = L.icon({
     iconUrl: '/icon-location.svg',

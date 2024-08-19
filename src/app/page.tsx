@@ -14,12 +14,12 @@ export default function Home() {
           width={1440}
           height={280}
           className='h-full w-full object-cover'
+          priority
         />
       </div>
       <div className='flex items-center flex-col gap-6 py-8 px-4 h-screen'>
         <h1 className='text-white text-2xl font-medium'>IP Address Tracker</h1>
 
-        {/* new component */}
         <SearchForm />
 
         <IpInformation />
