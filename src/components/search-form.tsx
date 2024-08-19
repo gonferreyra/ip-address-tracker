@@ -13,10 +13,9 @@ export default function SearchForm() {
     handleSubmit,
     reset,
   } = useForm();
-  const { dispatch } = useIpContext();
+  const { dispatch, isLoading } = useIpContext();
 
   const onSubmit = async (data: FieldValues) => {
-    // await new Promise((resolve) => setTimeout(resolve, 2000));
     dispatch({ type: 'isLoading' });
 
     if (data.length == 0) {
@@ -25,6 +24,10 @@ export default function SearchForm() {
     // validations
     if (!ValidateIPAddress(data.search)) {
       toast.error('Invalid IP address. Please try again.');
+      dispatch({
+        type: 'rejected',
+        payload: 'Invalid IP address, failed on IpValidation',
+      });
       return;
     }
 
@@ -37,6 +40,7 @@ export default function SearchForm() {
     );
     if (!response.ok) {
       toast.error('Invalid IP address. Please try again.');
+      dispatch({ type: 'rejected', payload: 'Invalid IP address' });
       return;
     }
     const responseData = await response.json();
@@ -60,7 +64,10 @@ export default function SearchForm() {
           className='h-full rounded-l-lg p-4 focus:outline-none flex-1 '
           placeholder='Search for any IP address or domain'
         />
-        <button className='bg-veryDarkGray h-full w-[32px] flex justify-center items-center rounded-r-lg'>
+        <button
+          className='bg-veryDarkGray h-full w-[32px] flex justify-center items-center rounded-r-lg'
+          disabled={isLoading}
+        >
           <ChevronRightIcon className='text-white text-2xl' />
         </button>
       </form>
