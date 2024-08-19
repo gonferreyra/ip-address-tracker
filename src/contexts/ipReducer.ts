@@ -3,9 +3,7 @@ import { IpAddressObject } from '@/lib/interfaces';
 type State = {
   isLoading: boolean;
   error: string;
-  isSearching: boolean;
   ipData: IpAddressObject | null;
-  searchedData: IpAddressObject | null;
 };
 
 export type ReducerActions =
@@ -28,7 +26,7 @@ export const ipReducer = (state: State, action: ReducerActions) => {
       return {
         ...state,
         isLoading: false,
-        IpData: action.payload,
+        ipData: action.payload,
       };
     case 'ipData/searched':
       return {
